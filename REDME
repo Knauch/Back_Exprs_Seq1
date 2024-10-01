@@ -1,0 +1,6 @@
+1. NPM init to start the stuff
+-entry point server.js
+-packeges: npm i express sequelize cors mysql2
+
+
+2. setting server.js file with basic settings
