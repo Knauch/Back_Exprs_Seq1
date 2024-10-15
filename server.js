@@ -1,25 +1,21 @@
 const express = require('express')
 
-//basic settings START
+
 const app = express()
 
+// middleware
 
-
-//middleware
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-//routers
+// routers
 const router = require('./routes/productRouter.js')
 app.use('/api/products', router)
-
 
 //port
 const PORT = process.env.PORT || 8080
 
-//server 
+//server
 app.listen(PORT, () => {
-    console.log(`server is running at ${PORT}`)
+    console.log(`server is running on port ${PORT}`)
 })
-
-//basic settings END
