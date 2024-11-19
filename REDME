@@ -14,3 +14,10 @@
 
 7. Making the conection between product and review (1 to many) in index file with forength key (hasMany and belongsTo)
 - adding async func to productController that includes (conects) reviews and products through product_id witch we have in reviewController
+
+8. npx create-react-app client making and initializing react client part for frontend
+9. Creating menues like Add Show Edit Product
+10. Setting  Router Routes the links for each of the menues
+11. Need to add to package.json this to conect with the server "proxy": "http://127.0.0.1:8080",
+
+12. setting HTML layout
