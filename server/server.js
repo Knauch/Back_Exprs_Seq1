@@ -16,6 +16,9 @@ app.use(express.urlencoded({ extended: true }))
 const router = require('./routes/productRouter.js')
 app.use('/api/products', router)
 
+//static image folder
+app.use('/Images', express.static('./Images'))
+
 //port
 const PORT = process.env.PORT || 8080
 

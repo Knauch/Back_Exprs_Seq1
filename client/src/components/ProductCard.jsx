@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
   return (
     <>
       <Card className='shadow-lg m-2 p-3 rounded' style={{ width: '18rem' }}>
-        <Card.Img variant="top" src="holder.js/100px180" />
+        <Card.Img variant="top" src={product.image} />
         <Card.Body>
           <Card.Title>{product.title}</Card.Title>
 

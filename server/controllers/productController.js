@@ -1,6 +1,10 @@
 
 const db = require('../models')
 
+//image upload part
+const multer = require('multer')
+const path = require('path')
+
 //create our Main model
 const Product = db.products
 const Review = db.reviews
@@ -12,10 +16,11 @@ const addProduct = async (req, res) => {
 
   //info that will come from API
   let info = {
-      title: req.body.title,
-      price: req.body.price,
-      description: req.body.description,
-      published: !!req.body.published 
+    image: req.file.path, // image path in the server
+    title: req.body.title,
+    price: req.body.price,
+    description: req.body.description,
+    published: !!req.body.published
   }
 
   const product = await Product.create(info)
@@ -28,10 +33,10 @@ const addProduct = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
 
-  try{
+  try {
     let products = await Product.findAll()
     res.status(200).send(products)
-  }catch(err){
+  } catch (err) {
     res.status(500).send('Error retrieving products'); // Handle errors if they occur
   }
 }
@@ -68,7 +73,7 @@ const deleteProduct = async (req, res) => {
 //6. get published product
 
 const getPublishedProduct = async (req, res) => {
-  const products = await Product.findAll({ where: { published: true}})
+  const products = await Product.findAll({ where: { published: true } })
   res.status(200).send(products)
 }
 
@@ -82,11 +87,41 @@ const getProductReviews = async (req, res) => {
       model: Review,
       as: 'review'
     }],
-    where: {id : id}
+    where: { id: id }
   })
 
   res.status(200).send(data)
 }
+
+//8. setting the image related stuf
+
+//cd means callback function with folowing props, null - if no error , and 'Images' meaning local folder in the project
+// Date.now() + path..... meaning setting unique file name
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'Images')
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname))
+  }
+})
+
+// general settings (just do it) .single('image') - is refering to the product model where we define the image if use .array('images', 3) - for multiple images
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: '1000000' },
+  fileFilter: (req, file, cb) => {
+    const fileTypes = /jpeg|jpg|png|gif/
+    const mimeType = fileTypes.test(file.mimetype)
+    const extname = fileTypes.test(path.extname(file.originalname))
+
+    if (mimeType && extname) {
+      return cb(null, true)
+    }
+    cb('Give proper files formate to upload')
+  }
+}).single('image')
 
 
 module.exports = {
@@ -96,5 +131,6 @@ module.exports = {
   getOneProduct,
   getAllProducts,
   getPublishedProduct,
-  getProductReviews
+  getProductReviews,
+  upload
 }

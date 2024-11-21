@@ -20,7 +20,7 @@ const ProductDetail = (product) => {
   const [price, setPrice] = useState('')
   const [description, setDescription] = useState('')
   const [reviews, setReviews] = useState([])
-
+  const [productImage, setProductImage] = useState(null)
   const [newTextReview, setNewTextReview] = useState('')
   const [newStarRating, setNewStarRating] = useState(1); // newStarRating state initialized to 1
 
@@ -32,7 +32,7 @@ const ProductDetail = (product) => {
       setPrice(data.price)
       setDescription(data.description)
       setReviews(data.review)
-
+      setProductImage(data.image)
     }
     getSingleProductData()
   }, [id])
@@ -69,6 +69,7 @@ const ProductDetail = (product) => {
         <hr />
 
         <Card className='shadow-lg m-5 p-3 rounded' style={{ width: '18rem' }}>
+         <Card.Img src ={ `http://localhost:3001/${productImage}`} />
           <Card.Body>
             <Card.Title>Product Name: {title}</Card.Title>
             <Card.Title>Price: ${price}</Card.Title>

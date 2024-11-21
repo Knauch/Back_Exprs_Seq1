@@ -1,4 +1,3 @@
-const express = require('express');
 
 const productController = require('../controllers/productController.js')
 const reviewController = require('../controllers/reviewController.js');
@@ -6,7 +5,7 @@ const reviewController = require('../controllers/reviewController.js');
 const router = require('express').Router()
 
 //all routes
-router.post('/addProduct', productController.addProduct)
+router.post('/addProduct', productController.upload, productController.addProduct)
 router.get('/allProducts', productController.getAllProducts)
 router.get('/published', productController.getPublishedProduct)
 
